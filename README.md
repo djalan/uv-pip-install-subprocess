@@ -1,6 +1,7 @@
 # Readme
 
-- `uv venv`
-- `.venv\scripts\activate`
-- `python poc.py`
+1. `uv venv`
+2. `.venv\scripts\activate`
+3. `python poc.py`
 
+requirements are installed inside the current repo instead of the target repo specified by `--directory`
