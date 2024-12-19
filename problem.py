@@ -8,6 +8,7 @@ UV_EXE = Path(shutil.which("uv"))
 TEMP_PATH = Path(os.environ["TEMP"])
 TARGET_PATH = TEMP_PATH / f"uv-pip-install-{time.time_ns()}"
 REQUIREMENTS_PATH = TARGET_PATH / "requirements.txt"
+TARGET_VENV_PATH = TARGET_PATH / ".venv"
 
 
 # simulate cloning of some Git repo containing a requirements.txt file
@@ -26,13 +27,11 @@ with subprocess.Popen(
         "--no-progress",
         "--color",
         "never",
-        "--directory",
-        TARGET_PATH.absolute().as_posix(),
+        TARGET_VENV_PATH,
     ],
     stdout=subprocess.PIPE,
     bufsize=1,
     universal_newlines=True,
-    cwd=TARGET_PATH,
 ) as proc:
     for line in proc.stdout:
         print(line, end="")
@@ -45,12 +44,12 @@ with subprocess.Popen(
         "pip",
         "install",
         "--directory",
-        TARGET_PATH.absolute().as_posix(),
+        TARGET_PATH,
         "--no-progress",
         "--color",
         "never",
         "-r",
-        REQUIREMENTS_PATH.absolute().as_posix(),
+        REQUIREMENTS_PATH,
     ],
     stdout=subprocess.PIPE,
     bufsize=1,
